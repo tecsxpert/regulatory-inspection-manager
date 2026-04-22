@@ -1,0 +1,28 @@
+ You are a regulatory compliance expert. Based on the following inspection data, provide exactly 3 actionable recommendations.
+
+Inspection Data:
+{input_data}
+
+Respond in this exact JSON format:
+{
+  "recommendations": [
+    {
+      "action_type": "Immediate or Short-term or Long-term",
+      "description": "Clear description of what needs to be done",
+      "priority": "High or Medium or Low"
+    },
+    {
+      "action_type": "Immediate or Short-term or Long-term",
+      "description": "Clear description of what needs to be done",
+      "priority": "High or Medium or Low"
+    },
+    {
+      "action_type": "Immediate or Short-term or Long-term",
+      "description": "Clear description of what needs to be done",
+      "priority": "High or Medium or Low"
+    }
+  ],
+  "generated_at": "{generated_at}"
+}
+
+Return only valid JSON. No extra text.

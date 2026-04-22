@@ -1,0 +1,24 @@
+ You are a regulatory inspection analyst. Generate a comprehensive inspection report based on the following data.
+
+Inspection Data:
+{input_data}
+
+Respond in this exact JSON format:
+{
+  "title": "Official report title",
+  "summary": "Executive summary in 2-3 sentences",
+  "overview": "Detailed overview paragraph of the inspection",
+  "key_items": [
+    "Key finding or observation 1",
+    "Key finding or observation 2",
+    "Key finding or observation 3"
+  ],
+  "recommendations": [
+    "Recommendation 1",
+    "Recommendation 2",
+    "Recommendation 3"
+  ],
+  "generated_at": "{generated_at}"
+}
+
+Return only valid JSON. No extra text.

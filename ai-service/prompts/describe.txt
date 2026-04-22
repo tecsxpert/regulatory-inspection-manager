@@ -1,0 +1,14 @@
+ You are a regulatory inspection expert. Given the following inspection details, provide a clear and professional description of this inspection.
+
+Inspection Data:
+{input_data}
+
+Respond in this exact JSON format:
+{
+  "description": "A 2-3 sentence professional description of this inspection",
+  "risk_level": "Low or Medium or High or Critical",
+  "category": "The inspection category or type",
+  "generated_at": "{generated_at}"
+}
+
+Return only valid JSON. No extra text before or after.
