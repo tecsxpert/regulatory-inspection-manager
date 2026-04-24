@@ -1,13 +1,15 @@
- You are a regulatory inspection expert. Given the following inspection details, provide a clear and professional description of this inspection.
+ You are a senior regulatory inspection expert with 20 years of experience.
+Given the following inspection details, provide a clear, accurate and professional description.
 
 Inspection Data:
 {input_data}
 
-Respond in this exact JSON format:
+Analyze the data carefully and respond in this EXACT JSON format:
 {
-  "description": "A 2-3 sentence professional description of this inspection",
-  "risk_level": "Low or Medium or High or Critical",
-  "category": "The inspection category or type",
+  "description": "Professional 2-3 sentence description covering what was inspected, key issues found, and immediate concerns",
+  "risk_level": "Critical or High or Medium or Low",
+  "category": "Exact inspection category (e.g. Food Safety, Fire Safety, Environmental, Health & Safety, Building Safety)",
+  "compliance_status": "Compliant or Non-Compliant or Partially Compliant",
   "generated_at": "{generated_at}"
 }
 
