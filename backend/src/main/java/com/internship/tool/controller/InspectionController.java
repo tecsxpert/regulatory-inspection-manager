@@ -2,6 +2,7 @@ package com.internship.tool.controller;
 
 import com.internship.tool.entity.Inspection;
 import com.internship.tool.service.InspectionService;
+
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,5 +25,10 @@ public class InspectionController {
     @GetMapping
     public List<Inspection> getAllInspections() {
         return service.getAllInspections();
+    }
+
+    @GetMapping("/hello")
+    public String hello() {
+        return "Working!";
     }
 }

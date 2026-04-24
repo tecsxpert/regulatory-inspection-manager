@@ -1,0 +1,5 @@
+com\internship\tool\entity\Inspection.class
+com\internship\tool\service\InspectionService.class
+com\internship\tool\repository\InspectionRepository.class
+com\internship\tool\controller\InspectionController.class
+com\internship\tool\ToolApplication.class
