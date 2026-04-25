@@ -1,5 +1,13 @@
-C:\Users\ksspv\OneDrive\Desktop\regulatory-inspection-manager\backend\src\main\java\com\internship\tool\entity\Inspection.java
-C:\Users\ksspv\OneDrive\Desktop\regulatory-inspection-manager\backend\src\main\java\com\internship\tool\service\InspectionService.java
+C:\Users\ksspv\OneDrive\Desktop\regulatory-inspection-manager\backend\src\main\java\com\internship\tool\security\JwtAuthFilter.java
+C:\Users\ksspv\OneDrive\Desktop\regulatory-inspection-manager\backend\src\main\java\com\internship\tool\service\AuthService.java
+C:\Users\ksspv\OneDrive\Desktop\regulatory-inspection-manager\backend\src\main\java\com\internship\tool\entity\Role.java
 C:\Users\ksspv\OneDrive\Desktop\regulatory-inspection-manager\backend\src\main\java\com\internship\tool\controller\InspectionController.java
 C:\Users\ksspv\OneDrive\Desktop\regulatory-inspection-manager\backend\src\main\java\com\internship\tool\repository\InspectionRepository.java
+C:\Users\ksspv\OneDrive\Desktop\regulatory-inspection-manager\backend\src\main\java\com\internship\tool\repository\UserRepository.java
+C:\Users\ksspv\OneDrive\Desktop\regulatory-inspection-manager\backend\src\main\java\com\internship\tool\controller\AuthController.java
+C:\Users\ksspv\OneDrive\Desktop\regulatory-inspection-manager\backend\src\main\java\com\internship\tool\entity\User.java
+C:\Users\ksspv\OneDrive\Desktop\regulatory-inspection-manager\backend\src\main\java\com\internship\tool\security\JwtUtil.java
+C:\Users\ksspv\OneDrive\Desktop\regulatory-inspection-manager\backend\src\main\java\com\internship\tool\entity\Inspection.java
+C:\Users\ksspv\OneDrive\Desktop\regulatory-inspection-manager\backend\src\main\java\com\internship\tool\security\SecurityConfig.java
+C:\Users\ksspv\OneDrive\Desktop\regulatory-inspection-manager\backend\src\main\java\com\internship\tool\service\InspectionService.java
 C:\Users\ksspv\OneDrive\Desktop\regulatory-inspection-manager\backend\src\main\java\com\internship\tool\ToolApplication.java
