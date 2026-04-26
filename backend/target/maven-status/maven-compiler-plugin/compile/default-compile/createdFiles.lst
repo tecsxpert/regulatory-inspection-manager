@@ -5,6 +5,7 @@ com\internship\tool\service\InspectionService.class
 com\internship\tool\repository\InspectionRepository.class
 com\internship\tool\service\AuthService.class
 com\internship\tool\security\SecurityConfig.class
+com\internship\tool\config\RedisConfig.class
 com\internship\tool\controller\InspectionController.class
 com\internship\tool\ToolApplication.class
 com\internship\tool\repository\UserRepository.class

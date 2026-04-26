@@ -7,6 +7,7 @@ C:\Users\ksspv\OneDrive\Desktop\regulatory-inspection-manager\backend\src\main\j
 C:\Users\ksspv\OneDrive\Desktop\regulatory-inspection-manager\backend\src\main\java\com\internship\tool\controller\AuthController.java
 C:\Users\ksspv\OneDrive\Desktop\regulatory-inspection-manager\backend\src\main\java\com\internship\tool\entity\User.java
 C:\Users\ksspv\OneDrive\Desktop\regulatory-inspection-manager\backend\src\main\java\com\internship\tool\security\JwtUtil.java
+C:\Users\ksspv\OneDrive\Desktop\regulatory-inspection-manager\backend\src\main\java\com\internship\tool\config\RedisConfig.java
 C:\Users\ksspv\OneDrive\Desktop\regulatory-inspection-manager\backend\src\main\java\com\internship\tool\entity\Inspection.java
 C:\Users\ksspv\OneDrive\Desktop\regulatory-inspection-manager\backend\src\main\java\com\internship\tool\security\SecurityConfig.java
 C:\Users\ksspv\OneDrive\Desktop\regulatory-inspection-manager\backend\src\main\java\com\internship\tool\service\InspectionService.java
