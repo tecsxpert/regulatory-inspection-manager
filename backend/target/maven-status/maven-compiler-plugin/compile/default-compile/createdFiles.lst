@@ -11,6 +11,8 @@ com\internship\tool\controller\InspectionController.class
 com\internship\tool\ToolApplication.class
 com\internship\tool\repository\UserRepository.class
 com\internship\tool\entity\User.class
+com\internship\tool\config\MailConfig.class
 com\internship\tool\controller\AuthController.class
 com\internship\tool\security\JwtUtil.class
+com\internship\tool\exception\GlobalExceptionHandler.class
 com\internship\tool\service\ReminderService.class

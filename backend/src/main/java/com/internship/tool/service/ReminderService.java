@@ -13,7 +13,7 @@ public class ReminderService {
     }
 
     // Runs every 1 minute (for testing)
-    @Scheduled(fixedRate = 60000)
+    @Scheduled(cron = "0 0 9 * * ?")
     public void sendReminder() {
 
         System.out.println("Sending reminder email...");
