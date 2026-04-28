@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Inspection Manager</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f7fa;
+            padding: 16px;
+        }
+
+        h1 {
+            color: #1B4F8A;
+        }
+
+        button {
+            background: #1B4F8A;
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            height: 44px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #163d6a;
+        }
+
+        .card {
+            background: white;
+            padding: 16px;
+            margin-top: 16px;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+
+        .card p {
+            padding: 8px;
+            border-bottom: 1px solid #eee;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Inspection Manager</h1>
+
+<button onclick="loadData()">Load Inspections</button>
+
+<div id="data" class="card">Click button to load data</div>
+
+<script>
+async function loadData() {
+    const container = document.getElementById("data");
+    container.innerHTML = "Loading...";
+
+    try {
+        const res = await fetch("http://localhost:8081/api/inspections?page=0&size=10", {
+            headers: {
+                "Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MiIsImlhdCI6MTc3NzI5NzY3OCwiZXhwIjoxNzc3Mzg0MDc4fQ.v7C1jtXf-85GHXlS9YvwiC7tdoS-07zIBuYaKxbCq98"
+            }
+        });
+
+        if (!res.ok) {
+            throw new Error("Failed to fetch data");
+        }
+
+        const data = await res.json();
+
+        if (!data || data.length === 0) {
+            container.innerHTML = "No inspections found";
+            return;
+        }
+
+        container.innerHTML =
+            data.map(i => `<p>${i.id} - ${i.name}</p>`).join("");
+
+    } catch (err) {
+        container.innerHTML = "❌ Error: " + err.message;
+    }
+}
+</script>
+
+</body>
+</html>
