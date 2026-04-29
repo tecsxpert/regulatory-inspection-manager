@@ -6,6 +6,7 @@ from dotenv import load_dotenv
 import os
 
 load_dotenv()
+from services.embeddings import load_embedding_model
 
 app = Flask(__name__)
 
@@ -62,4 +63,6 @@ def rate_limit_exceeded(e):
     return jsonify({"error": "Rate limit exceeded. Max 30 requests per minute."}), 429
 
 if __name__ == '__main__':
+    load_embedding_model()
     app.run(host='0.0.0.0', port=5000, debug=True)
+ 

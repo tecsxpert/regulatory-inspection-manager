@@ -131,3 +131,19 @@ All responses from the AI service include the following security headers:
 
 ## 6. Team Sign-off
 - AI Developer 1 (Sudeeksha): ✅ Reviewed and approved
+## Day 11 — Full ZAP Active Scan Results
+
+### Scan Date: 30 April 2026
+### Tool: OWASP ZAP 2.17.0
+### Target: http://127.0.0.1:5000/health
+
+| Risk Level | Findings |
+|------------|----------|
+| High | 0 ✅ |
+| Critical | 0 ✅ |
+| Medium | 0 ✅ |
+| Low | 1 |
+| Informational | 1 |
+
+All Critical and High findings confirmed zero.
+Report saved as zap_report_day11.html
