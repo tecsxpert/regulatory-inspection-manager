@@ -1,0 +1,67 @@
+version: '3.8'
+
+services:
+
+  # 🟢 SPRING BOOT BACKEND
+  backend:
+    build: .
+    container_name: inspection-backend
+    ports:
+      - "8081:8081"
+    depends_on:
+      - postgres
+      - redis
+      - mailhog
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/inspection_db
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+
+      SPRING_DATA_REDIS_HOST: redis
+      SPRING_DATA_REDIS_PORT: 6379
+
+      SPRING_MAIL_HOST: mailhog
+      SPRING_MAIL_PORT: 1025
+
+    restart: always
+
+  # 🟣 POSTGRES DATABASE
+  postgres:
+    image: postgres:15
+    container_name: postgres-db
+    environment:
+      POSTGRES_DB: inspection_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  # 🔴 REDIS CACHE
+  redis:
+    image: redis:7
+    container_name: redis-cache
+    ports:
+      - "6379:6379"
+
+  # 🟡 PGADMIN (DB UI)
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "5050:80"
+
+  # 🔵 MAILHOG (EMAIL TESTING)
+  mailhog:
+    image: mailhog/mailhog
+    container_name: mailhog
+    ports:
+      - "1025:1025"
+      - "8025:8025"
+
+volumes:
+  postgres_data:
