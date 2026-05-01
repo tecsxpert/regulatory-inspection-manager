@@ -7,3 +7,5 @@ python-dotenv==1.0.1
 redis==5.0.7
 requests==2.32.3
 pytest==8.2.2
+sentence-transformers==2.7.0
+chromadb==1.5.8
