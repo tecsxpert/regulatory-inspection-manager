@@ -8,7 +8,6 @@ function AddInspection({ selectedInspection, setPage }) {
     status: "",
   });
 
-  // ✅ Prefill for edit
   useEffect(() => {
     if (selectedInspection) {
       setForm(selectedInspection);
@@ -27,24 +26,23 @@ function AddInspection({ selectedInspection, setPage }) {
 
     console.log("Submitted Data:", form);
 
-    // 👉 No backend, just navigate back
     setPage("list");
   };
 
   return (
-    <div className="p-4">
-      <h2 className="text-xl font-bold mb-4">
+    <div>
+      <h2 className="text-2xl font-semibold mb-4">
         {selectedInspection ? "Edit Inspection" : "Add Inspection"}
       </h2>
 
-      <form onSubmit={handleSubmit} className="flex flex-col gap-3 w-1/3">
+      <form className="bg-white p-6 shadow rounded flex flex-col gap-4 w-96" onSubmit={handleSubmit}>
         <input
           type="text"
           name="name"
           placeholder="Inspection Name"
           value={form.name}
           onChange={handleChange}
-          className="border p-2"
+          className="border p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
           required
         />
 
@@ -54,7 +52,7 @@ function AddInspection({ selectedInspection, setPage }) {
           placeholder="Regulatory Body"
           value={form.body}
           onChange={handleChange}
-          className="border p-2"
+          className="border p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
           required
         />
 
@@ -63,7 +61,7 @@ function AddInspection({ selectedInspection, setPage }) {
           name="date"
           value={form.date}
           onChange={handleChange}
-          className="border p-2"
+          className="border p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
           required
         />
 
@@ -73,11 +71,11 @@ function AddInspection({ selectedInspection, setPage }) {
           placeholder="Status"
           value={form.status}
           onChange={handleChange}
-          className="border p-2"
+          className="border p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
           required
         />
 
-        <button className="bg-green-500 text-white p-2 rounded">
+        <button className="bg-green-500 hover:bg-green-600 text-white p-2 rounded">
           {selectedInspection ? "Update" : "Submit"}
         </button>
       </form>

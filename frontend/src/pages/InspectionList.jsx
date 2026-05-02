@@ -6,7 +6,6 @@ function InspectionList({ onEdit }) {
 
   const fetchData = () => {
     try {
-      // ✅ MOCK DATA (no backend needed)
       const data = [
         {
           id: 1,
@@ -36,58 +35,60 @@ function InspectionList({ onEdit }) {
     fetchData();
   }, []);
 
-  // ✅ Mock delete
   const handleDelete = (id) => {
     const updated = inspections.filter((item) => item.id !== id);
     setInspections(updated);
   };
 
-  if (loading) return <p className="p-4">Loading...</p>;
+  if (loading)
+    return <p className="p-4 text-gray-600">Loading...</p>;
 
   if (inspections.length === 0)
-    return <p className="p-4">No inspections found</p>;
+    return <p className="p-4 text-gray-600">No inspections found</p>;
 
   return (
-    <div className="p-4">
-      <h2 className="text-xl font-bold mb-4">Inspection List</h2>
+    <div>
+      <h2 className="text-2xl font-semibold mb-4">Inspection List</h2>
 
-      <table className="table-auto border w-full">
-        <thead>
-          <tr className="bg-gray-300">
-            <th className="border px-2">Name</th>
-            <th className="border px-2">Body</th>
-            <th className="border px-2">Date</th>
-            <th className="border px-2">Status</th>
-            <th className="border px-2">Actions</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          {inspections.map((item) => (
-            <tr key={item.id}>
-              <td className="border px-2">{item.name}</td>
-              <td className="border px-2">{item.body}</td>
-              <td className="border px-2">{item.date}</td>
-              <td className="border px-2">{item.status}</td>
-              <td className="border px-2">
-                <button
-                  onClick={() => onEdit(item)}
-                  className="bg-yellow-500 text-white px-2 py-1 rounded mr-2"
-                >
-                  Edit
-                </button>
-
-                <button
-                  onClick={() => handleDelete(item.id)}
-                  className="bg-red-500 text-white px-2 py-1 rounded"
-                >
-                  Delete
-                </button>
-              </td>
+      <div className="overflow-x-auto">
+        <table className="w-full border-collapse bg-white shadow rounded overflow-hidden">
+          <thead>
+            <tr className="bg-gray-200 text-left">
+              <th className="p-3">Name</th>
+              <th className="p-3">Body</th>
+              <th className="p-3">Date</th>
+              <th className="p-3">Status</th>
+              <th className="p-3">Actions</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+
+          <tbody>
+            {inspections.map((item) => (
+              <tr key={item.id} className="border-t">
+                <td className="p-3">{item.name}</td>
+                <td className="p-3">{item.body}</td>
+                <td className="p-3">{item.date}</td>
+                <td className="p-3">{item.status}</td>
+                <td className="p-3">
+                  <button
+                    onClick={() => onEdit(item)}
+                    className="bg-yellow-400 hover:bg-yellow-500 text-white px-3 py-1 rounded mr-2"
+                  >
+                    Edit
+                  </button>
+
+                  <button
+                    onClick={() => handleDelete(item.id)}
+                    className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded"
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }

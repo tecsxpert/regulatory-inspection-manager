@@ -12,39 +12,47 @@ function App() {
   };
 
   return (
-    <div>
+    <div className="min-h-screen bg-gray-100">
       {/* Navbar */}
-      <div className="p-4 bg-gray-200 flex gap-4">
-        <button
-          onClick={() => {
-            setPage("list");
-            setSelectedInspection(null);
-          }}
-          className="bg-blue-500 text-white px-3 py-1 rounded"
-        >
-          View Inspections
-        </button>
+      <div className="bg-white shadow p-4 flex justify-between items-center">
+        <h1 className="text-xl font-bold">Inspection Manager</h1>
 
-        <button
-          onClick={() => {
-            setPage("add");
-            setSelectedInspection(null);
-          }}
-          className="bg-green-500 text-white px-3 py-1 rounded"
-        >
-          Add Inspection
-        </button>
+        <div className="flex gap-3">
+          <button
+            onClick={() => {
+              setPage("list");
+              setSelectedInspection(null);
+            }}
+            className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-1 rounded"
+          >
+            View
+          </button>
+
+          <button
+            onClick={() => {
+              setPage("add");
+              setSelectedInspection(null);
+            }}
+            className="bg-green-500 hover:bg-green-600 text-white px-4 py-1 rounded"
+          >
+            Add
+          </button>
+        </div>
       </div>
 
-      {/* Pages */}
-      {page === "list" && <InspectionList onEdit={handleEdit} />}
+      {/* Content */}
+      <div className="p-6">
+        {page === "list" && (
+          <InspectionList onEdit={handleEdit} />
+        )}
 
-      {page === "add" && (
-        <AddInspection
-          selectedInspection={selectedInspection}
-          setPage={setPage}
-        />
-      )}
+        {page === "add" && (
+          <AddInspection
+            selectedInspection={selectedInspection}
+            setPage={setPage}
+          />
+        )}
+      </div>
     </div>
   );
 }
