@@ -3,6 +3,7 @@ import InspectionList from "./pages/InspectionList";
 import AddInspection from "./pages/AddInspection";
 import Dashboard from "./pages/Dashboard";
 import AIPanel from "./pages/AIPanel";
+import FileUpload from "./pages/FileUpload";
 import Login from "./pages/Login";
 import ProtectedRoute from "./auth/ProtectedRoute";
 import { useAuth } from "./auth/AuthContext";
@@ -18,7 +19,6 @@ function App() {
     setPage("add");
   };
 
-  // 👉 Show login if not authenticated
   if (!user) {
     return <Login />;
   }
@@ -29,10 +29,10 @@ function App() {
       <div className="bg-white shadow p-4 flex justify-between items-center">
         <h1 className="text-xl font-bold">Inspection Manager</h1>
 
-        <div className="flex gap-3">
+        <div className="flex gap-3 flex-wrap">
           <button
             onClick={() => setPage("dashboard")}
-            className="bg-purple-500 hover:bg-purple-600 text-white px-3 py-1 rounded"
+            className="bg-purple-500 text-white px-3 py-1 rounded"
           >
             Dashboard
           </button>
@@ -42,7 +42,7 @@ function App() {
               setPage("list");
               setSelectedInspection(null);
             }}
-            className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded"
+            className="bg-blue-500 text-white px-3 py-1 rounded"
           >
             View
           </button>
@@ -52,21 +52,28 @@ function App() {
               setPage("add");
               setSelectedInspection(null);
             }}
-            className="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded"
+            className="bg-green-500 text-white px-3 py-1 rounded"
           >
             Add
           </button>
 
           <button
             onClick={() => setPage("ai")}
-            className="bg-indigo-500 hover:bg-indigo-600 text-white px-3 py-1 rounded"
+            className="bg-indigo-500 text-white px-3 py-1 rounded"
           >
             AI
           </button>
 
           <button
+            onClick={() => setPage("upload")}
+            className="bg-gray-600 text-white px-3 py-1 rounded"
+          >
+            Upload
+          </button>
+
+          <button
             onClick={logout}
-            className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded"
+            className="bg-red-500 text-white px-3 py-1 rounded"
           >
             Logout
           </button>
@@ -90,6 +97,8 @@ function App() {
           )}
 
           {page === "ai" && <AIPanel />}
+
+          {page === "upload" && <FileUpload />}
         </ProtectedRoute>
       </div>
     </div>

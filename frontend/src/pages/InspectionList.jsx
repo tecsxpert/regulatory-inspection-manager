@@ -7,7 +7,6 @@ function InspectionList({ onEdit }) {
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("");
 
-  // ✅ Mock data
   useEffect(() => {
     const data = [
       { id: 1, name: "Food Check", body: "FDA", date: "2025-01-01", status: "Pending" },
@@ -19,7 +18,6 @@ function InspectionList({ onEdit }) {
     setFiltered(data);
   }, []);
 
-  // ✅ Filter logic
   useEffect(() => {
     let result = inspections;
 
@@ -42,11 +40,37 @@ function InspectionList({ onEdit }) {
     setFiltered(updated);
   };
 
+  // ✅ CSV Export
+  const handleExport = () => {
+    const csv = [
+      ["Name", "Body", "Date", "Status"],
+      ...filtered.map((i) => [i.name, i.body, i.date, i.status]),
+    ]
+      .map((row) => row.join(","))
+      .join("\n");
+
+    const blob = new Blob([csv], { type: "text/csv" });
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "inspections.csv";
+    a.click();
+  };
+
   return (
     <div>
       <h2 className="text-2xl font-semibold mb-4">Inspection List</h2>
 
-      {/* 🔍 Search + Filter */}
+      {/* Export Button */}
+      <button
+        onClick={handleExport}
+        className="bg-gray-700 text-white px-3 py-1 rounded mb-4"
+      >
+        Export CSV
+      </button>
+
+      {/* Search + Filter */}
       <div className="flex gap-4 mb-4">
         <input
           type="text"
