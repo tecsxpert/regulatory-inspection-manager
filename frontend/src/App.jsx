@@ -2,6 +2,7 @@ import { useState } from "react";
 import InspectionList from "./pages/InspectionList";
 import AddInspection from "./pages/AddInspection";
 import Dashboard from "./pages/Dashboard";
+import AIPanel from "./pages/AIPanel";
 import Login from "./pages/Login";
 import ProtectedRoute from "./auth/ProtectedRoute";
 import { useAuth } from "./auth/AuthContext";
@@ -9,7 +10,6 @@ import { useAuth } from "./auth/AuthContext";
 function App() {
   const { user, logout } = useAuth();
 
-  // 👉 Default page = dashboard after login
   const [page, setPage] = useState("dashboard");
   const [selectedInspection, setSelectedInspection] = useState(null);
 
@@ -18,7 +18,7 @@ function App() {
     setPage("add");
   };
 
-  // 👉 If not logged in → show login page
+  // 👉 Show login if not authenticated
   if (!user) {
     return <Login />;
   }
@@ -58,6 +58,13 @@ function App() {
           </button>
 
           <button
+            onClick={() => setPage("ai")}
+            className="bg-indigo-500 hover:bg-indigo-600 text-white px-3 py-1 rounded"
+          >
+            AI
+          </button>
+
+          <button
             onClick={logout}
             className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded"
           >
@@ -81,6 +88,8 @@ function App() {
               setPage={setPage}
             />
           )}
+
+          {page === "ai" && <AIPanel />}
         </ProtectedRoute>
       </div>
     </div>
