@@ -1,112 +1,93 @@
-import React, { useEffect, useState } from "react";
-import api from "../services/api";
+import { useEffect, useState } from "react";
 
-function InspectionList() {
+function InspectionList({ onEdit }) {
   const [inspections, setInspections] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    fetchInspections();
-  }, []);
-
-  const fetchInspections = async () => {
+  const fetchData = () => {
     try {
-      // 👉 Temporary mock data
+      // ✅ MOCK DATA (no backend needed)
       const data = [
         {
           id: 1,
-          inspection_name: "Food Safety Check",
-          regulatory_body: "FDA",
-          inspection_date: "2025-01-01",
-          status: "Pending"
+          name: "Food Safety Check",
+          body: "FDA",
+          date: "2025-01-01",
+          status: "Pending",
         },
         {
           id: 2,
-          inspection_name: "Quality Audit",
-          regulatory_body: "ISO",
-          inspection_date: "2025-02-15",
-          status: "Completed"
-        }
+          name: "Quality Audit",
+          body: "ISO",
+          date: "2025-02-15",
+          status: "Completed",
+        },
       ];
 
       setInspections(data);
-
-      // 👉 Later replace with:
-      // const response = await api.get("/inspections");
-      // setInspections(response.data);
-
-    } catch (error) {
-      console.error(error);
+    } catch (err) {
+      console.error(err);
     } finally {
       setLoading(false);
     }
   };
 
-  // ✅ Delete function
-  const handleDelete = async (id) => {
-    try {
-      // 👉 Mock delete (remove from UI)
-      const updated = inspections.filter(item => item.id !== id);
-      setInspections(updated);
+  useEffect(() => {
+    fetchData();
+  }, []);
 
-      // 👉 Later use real API:
-      // await api.delete(`/inspections/${id}`);
-
-    } catch (error) {
-      console.error(error);
-    }
+  // ✅ Mock delete
+  const handleDelete = (id) => {
+    const updated = inspections.filter((item) => item.id !== id);
+    setInspections(updated);
   };
 
+  if (loading) return <p className="p-4">Loading...</p>;
+
+  if (inspections.length === 0)
+    return <p className="p-4">No inspections found</p>;
+
   return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold mb-4">
-        Inspections List
-      </h1>
+    <div className="p-4">
+      <h2 className="text-xl font-bold mb-4">Inspection List</h2>
 
-      {/* ✅ Loading */}
-      {loading && <p>Loading...</p>}
+      <table className="table-auto border w-full">
+        <thead>
+          <tr className="bg-gray-300">
+            <th className="border px-2">Name</th>
+            <th className="border px-2">Body</th>
+            <th className="border px-2">Date</th>
+            <th className="border px-2">Status</th>
+            <th className="border px-2">Actions</th>
+          </tr>
+        </thead>
 
-      {/* ✅ Empty State */}
-      {!loading && inspections.length === 0 && (
-        <p>No inspections available</p>
-      )}
+        <tbody>
+          {inspections.map((item) => (
+            <tr key={item.id}>
+              <td className="border px-2">{item.name}</td>
+              <td className="border px-2">{item.body}</td>
+              <td className="border px-2">{item.date}</td>
+              <td className="border px-2">{item.status}</td>
+              <td className="border px-2">
+                <button
+                  onClick={() => onEdit(item)}
+                  className="bg-yellow-500 text-white px-2 py-1 rounded mr-2"
+                >
+                  Edit
+                </button>
 
-      {/* ✅ Table */}
-      {!loading && inspections.length > 0 && (
-        <table className="min-w-full bg-white border">
-          <thead>
-            <tr className="bg-gray-200">
-              <th className="p-2 border">ID</th>
-              <th className="p-2 border">Name</th>
-              <th className="p-2 border">Regulatory Body</th>
-              <th className="p-2 border">Date</th>
-              <th className="p-2 border">Status</th>
-              <th className="p-2 border">Actions</th>
+                <button
+                  onClick={() => handleDelete(item.id)}
+                  className="bg-red-500 text-white px-2 py-1 rounded"
+                >
+                  Delete
+                </button>
+              </td>
             </tr>
-          </thead>
-
-          <tbody>
-            {inspections.map((item) => (
-              <tr key={item.id}>
-                <td className="p-2 border">{item.id}</td>
-                <td className="p-2 border">{item.inspection_name}</td>
-                <td className="p-2 border">{item.regulatory_body}</td>
-                <td className="p-2 border">{item.inspection_date}</td>
-                <td className="p-2 border">{item.status}</td>
-
-                <td className="p-2 border">
-                  <button
-                    className="bg-red-500 text-white px-3 py-1 rounded"
-                    onClick={() => handleDelete(item.id)}
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }

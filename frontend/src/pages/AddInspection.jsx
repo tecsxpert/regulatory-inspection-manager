@@ -1,75 +1,84 @@
-import React, { useState } from "react";
-import api from "../services/api";
+import { useState, useEffect } from "react";
 
-function AddInspection() {
+function AddInspection({ selectedInspection, setPage }) {
   const [form, setForm] = useState({
-    inspection_name: "",
-    regulatory_body: "",
-    inspection_date: "",
-    status: ""
+    name: "",
+    body: "",
+    date: "",
+    status: "",
   });
+
+  // ✅ Prefill for edit
+  useEffect(() => {
+    if (selectedInspection) {
+      setForm(selectedInspection);
+    }
+  }, [selectedInspection]);
 
   const handleChange = (e) => {
     setForm({
       ...form,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
-    try {
-      // 👉 TEMP (until backend ready)
-      console.log("Form Data:", form);
+    console.log("Submitted Data:", form);
 
-      // 👉 Later use:
-      // await api.post("/inspections", form);
-
-      alert("Inspection added (mock)");
-    } catch (error) {
-      console.error(error);
-    }
+    // 👉 No backend, just navigate back
+    setPage("list");
   };
 
   return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold mb-4">Add Inspection</h1>
+    <div className="p-4">
+      <h2 className="text-xl font-bold mb-4">
+        {selectedInspection ? "Edit Inspection" : "Add Inspection"}
+      </h2>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-3 w-1/3">
         <input
           type="text"
-          name="inspection_name"
+          name="name"
           placeholder="Inspection Name"
+          value={form.name}
           onChange={handleChange}
-          className="border p-2 w-full"
+          className="border p-2"
+          required
         />
 
         <input
           type="text"
-          name="regulatory_body"
+          name="body"
           placeholder="Regulatory Body"
+          value={form.body}
           onChange={handleChange}
-          className="border p-2 w-full"
+          className="border p-2"
+          required
         />
 
         <input
           type="date"
-          name="inspection_date"
+          name="date"
+          value={form.date}
           onChange={handleChange}
-          className="border p-2 w-full"
+          className="border p-2"
+          required
         />
 
         <input
           type="text"
           name="status"
           placeholder="Status"
+          value={form.status}
           onChange={handleChange}
-          className="border p-2 w-full"
+          className="border p-2"
+          required
         />
 
-        <button className="bg-blue-500 text-white px-4 py-2">
-          Submit
+        <button className="bg-green-500 text-white p-2 rounded">
+          {selectedInspection ? "Update" : "Submit"}
         </button>
       </form>
     </div>
