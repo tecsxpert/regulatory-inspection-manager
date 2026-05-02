@@ -17,4 +17,7 @@ public class Inspection implements Serializable {
     private Long id;
 
     private String name;
+
+    // ✅ ADD THIS FIELD
+    private String aiResult;
 }
