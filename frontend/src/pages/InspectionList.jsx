@@ -40,7 +40,6 @@ function InspectionList({ onEdit }) {
     setFiltered(updated);
   };
 
-  // ✅ CSV Export
   const handleExport = () => {
     const csv = [
       ["Name", "Body", "Date", "Status"],
@@ -62,7 +61,7 @@ function InspectionList({ onEdit }) {
     <div>
       <h2 className="text-2xl font-semibold mb-4">Inspection List</h2>
 
-      {/* Export Button */}
+      {/* Export */}
       <button
         onClick={handleExport}
         className="bg-gray-700 text-white px-3 py-1 rounded mb-4"
@@ -71,19 +70,19 @@ function InspectionList({ onEdit }) {
       </button>
 
       {/* Search + Filter */}
-      <div className="flex gap-4 mb-4">
+      <div className="flex flex-col md:flex-row gap-3 mb-4">
         <input
           type="text"
           placeholder="Search by name"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="border p-2 rounded"
+          className="border p-2 rounded w-full md:w-64"
         />
 
         <select
           value={statusFilter}
           onChange={(e) => setStatusFilter(e.target.value)}
-          className="border p-2 rounded"
+          className="border p-2 rounded w-full md:w-48"
         >
           <option value="">All Status</option>
           <option value="Pending">Pending</option>
@@ -92,44 +91,46 @@ function InspectionList({ onEdit }) {
         </select>
       </div>
 
-      {/* Table */}
-      <table className="w-full bg-white shadow rounded">
-        <thead className="bg-gray-200">
-          <tr>
-            <th className="p-2">Name</th>
-            <th className="p-2">Body</th>
-            <th className="p-2">Date</th>
-            <th className="p-2">Status</th>
-            <th className="p-2">Actions</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          {filtered.map((item) => (
-            <tr key={item.id} className="border-t">
-              <td className="p-2">{item.name}</td>
-              <td className="p-2">{item.body}</td>
-              <td className="p-2">{item.date}</td>
-              <td className="p-2">{item.status}</td>
-              <td className="p-2">
-                <button
-                  onClick={() => onEdit(item)}
-                  className="bg-yellow-400 px-2 py-1 rounded mr-2"
-                >
-                  Edit
-                </button>
-
-                <button
-                  onClick={() => handleDelete(item.id)}
-                  className="bg-red-500 text-white px-2 py-1 rounded"
-                >
-                  Delete
-                </button>
-              </td>
+      {/* Responsive Table */}
+      <div className="overflow-x-auto">
+        <table className="min-w-[600px] w-full bg-white shadow rounded">
+          <thead className="bg-gray-200">
+            <tr>
+              <th className="p-2">Name</th>
+              <th className="p-2">Body</th>
+              <th className="p-2">Date</th>
+              <th className="p-2">Status</th>
+              <th className="p-2">Actions</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+
+          <tbody>
+            {filtered.map((item) => (
+              <tr key={item.id} className="border-t">
+                <td className="p-2">{item.name}</td>
+                <td className="p-2">{item.body}</td>
+                <td className="p-2">{item.date}</td>
+                <td className="p-2">{item.status}</td>
+                <td className="p-2">
+                  <button
+                    onClick={() => onEdit(item)}
+                    className="bg-yellow-400 px-2 py-1 rounded mr-2"
+                  >
+                    Edit
+                  </button>
+
+                  <button
+                    onClick={() => handleDelete(item.id)}
+                    className="bg-red-500 text-white px-2 py-1 rounded"
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
 
       {filtered.length === 0 && (
         <p className="mt-4 text-gray-500">No results found</p>

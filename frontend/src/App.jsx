@@ -28,7 +28,7 @@ function App() {
   return (
     <div className="min-h-screen bg-gray-100">
       {/* Navbar */}
-      <div className="bg-white shadow p-4 flex flex-col md:flex-row justify-between items-center gap-3">
+      <div className="flex flex-wrap gap-2 justify-center md:justify-end">
         <h1 className="text-xl font-bold">Inspection Manager</h1>
 
         <div className="flex flex-wrap gap-2">

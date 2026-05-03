@@ -8,7 +8,6 @@ import {
 } from "recharts";
 
 function Dashboard() {
-  // ✅ Mock data
   const stats = {
     total: 20,
     pending: 8,
@@ -27,7 +26,7 @@ function Dashboard() {
       <h2 className="text-2xl font-bold mb-4">Dashboard</h2>
 
       {/* KPI Cards */}
-      <div className="grid grid-cols-4 gap-4 mb-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-6">
         <div className="bg-white p-4 shadow rounded">
           <p>Total</p>
           <h3 className="text-xl">{stats.total}</h3>
@@ -50,8 +49,8 @@ function Dashboard() {
       </div>
 
       {/* Chart */}
-      <div className="bg-white p-4 shadow rounded">
-        <BarChart width={400} height={250} data={chartData}>
+      <div className="bg-white p-4 shadow rounded overflow-x-auto">
+        <BarChart width={500} height={250} data={chartData}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="name" />
           <YAxis />
