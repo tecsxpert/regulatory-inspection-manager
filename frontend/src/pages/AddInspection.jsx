@@ -10,7 +10,19 @@ function AddInspection({ selectedInspection, setPage }) {
 
   useEffect(() => {
     if (selectedInspection) {
-      setForm(selectedInspection);
+      setForm({
+        name: selectedInspection.name || "",
+        body: selectedInspection.body || "",
+        date: selectedInspection.date || "",
+        status: selectedInspection.status || "",
+      });
+    } else {
+      setForm({
+        name: "",
+        body: "",
+        date: "",
+        status: "",
+      });
     }
   }, [selectedInspection]);
 
@@ -29,9 +41,23 @@ function AddInspection({ selectedInspection, setPage }) {
       return;
     }
 
-    console.log("Submitted:", form);
+    // TODO: Save or update logic can be added here
+
+    // Reset form after adding new inspection
+    if (!selectedInspection) {
+      setForm({
+        name: "",
+        body: "",
+        date: "",
+        status: "",
+      });
+    }
+
     setPage("list");
   };
+
+  const isFormValid =
+    form.name && form.body && form.date && form.status;
 
   return (
     <div className="flex justify-center">
@@ -78,7 +104,13 @@ function AddInspection({ selectedInspection, setPage }) {
           className="border p-2 rounded"
         />
 
-        <button className="bg-green-500 text-white p-2 rounded">
+        <button
+          type="submit"
+          disabled={!isFormValid}
+          className={`p-2 rounded text-white ${
+            isFormValid ? "bg-green-500" : "bg-gray-400 cursor-not-allowed"
+          }`}
+        >
           {selectedInspection ? "Update" : "Submit"}
         </button>
       </form>
