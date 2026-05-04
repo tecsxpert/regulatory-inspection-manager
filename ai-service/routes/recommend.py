@@ -5,13 +5,43 @@ import re
 
 recommend_bp = Blueprint('recommend', __name__)
 
+INJECTION_PHRASES = [
+    'ignore previous instructions',
+    'ignore all instructions',
+    'tell me secrets',
+    'system:',
+    'assistant:',
+    'forget everything',
+    'new instructions',
+    'disregard',
+    'jailbreak',
+    'bypass'
+]
+
+SQL_PATTERNS = [
+    r'OR\s+1=1',
+    r'DROP\s+TABLE',
+    r'SELECT\s+\*',
+    r'INSERT\s+INTO',
+    r'DELETE\s+FROM',
+    r'UNION\s+SELECT',
+    r"'\s*OR\s*'",
+]
+
+def check_injection(text: str) -> bool:
+    text_lower = text.lower()
+    for phrase in INJECTION_PHRASES:
+        if phrase.lower() in text_lower:
+            return True
+    for pattern in SQL_PATTERNS:
+        if re.search(pattern, text, re.IGNORECASE):
+            return True
+    return False
+
 def sanitize_input(text: str) -> str:
     if not text:
-        return ""
+        return ''
     text = re.sub(r'<[^>]+>', '', text)
-    dangerous = ['ignore previous', 'ignore all', 'system:', 'assistant:']
-    for d in dangerous:
-        text = text.lower().replace(d, '')
     return text.strip()
 
 @recommend_bp.route('/recommend', methods=['POST'])
@@ -29,13 +59,16 @@ def recommend():
     if len(input_data) > 5000:
         return jsonify({"error": "input_data is too long (maximum 5000 characters)"}), 400
 
+    if check_injection(input_data):
+        return jsonify({"error": "Invalid input detected"}), 400
+
     generated_at = datetime.now(timezone.utc).isoformat()
 
     prompt_template = load_prompt("recommend.txt")
     prompt = prompt_template.replace("{input_data}", input_data)
     prompt = prompt.replace("{generated_at}", generated_at)
 
-    raw_response = call_groq(prompt, temperature=0.5)
+    raw_response = call_groq(prompt, temperature=0.3)
 
     if raw_response is None:
         return jsonify({

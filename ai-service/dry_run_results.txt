@@ -1,0 +1,12 @@
+AI Service — Demo Dry Run Results
+Date: May 2, 2026
+
+/describe        → Response time: ~1 second    ✅
+/recommend       → Response time: ~1 second    ✅
+/generate-report → Response time: ~1 second    ✅
+/health          → Response time: 1.015 seconds ✅
+
+All endpoints working: YES
+is_fallback: false on all: YES
+Model: llama-3.3-70b-versatile
+Tested by: Sudeeksha — AI Developer 1

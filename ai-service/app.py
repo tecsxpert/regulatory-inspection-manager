@@ -6,8 +6,11 @@ from dotenv import load_dotenv
 import os
 
 load_dotenv()
+from services.embeddings import load_embedding_model
+from services.chroma_client import initialize_chromadb
 
 app = Flask(__name__)
+
 
 # Rate limiting
 limiter = Limiter(
@@ -62,4 +65,7 @@ def rate_limit_exceeded(e):
     return jsonify({"error": "Rate limit exceeded. Max 30 requests per minute."}), 429
 
 if __name__ == '__main__':
+    load_embedding_model()
+    initialize_chromadb()
     app.run(host='0.0.0.0', port=5000, debug=True)
+ 
