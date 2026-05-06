@@ -1,73 +1,85 @@
 package com.internship.tool.service;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.client.ResourceAccessException;
-import org.springframework.http.*;
 
+import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
 
 @Service
+@Slf4j
 public class AiServiceClient {
-
-    private static final Logger logger = LoggerFactory.getLogger(AiServiceClient.class);
-
-    @Value("${ai.service.url:http://localhost:5000}")
-    private String aiServiceUrl;
 
     private final RestTemplate restTemplate;
 
-    public AiServiceClient() {
-        this.restTemplate = new RestTemplate();
+    @Value("${ai.service.url}")
+    private String aiServiceUrl;
+
+    public AiServiceClient(RestTemplateBuilder builder) {
+
+        this.restTemplate = builder
+                .setConnectTimeout(Duration.ofSeconds(10))
+                .setReadTimeout(Duration.ofSeconds(10))
+                .build();
     }
 
-    public Map<String, Object> describe(String inputData) {
-        return callAiEndpoint("/describe", inputData);
-    }
+    public Map<String, Object> generateDescription(String input) {
 
-    public Map<String, Object> recommend(String inputData) {
-        return callAiEndpoint("/recommend", inputData);
-    }
-
-    public Map<String, Object> generateReport(String inputData) {
-        return callAiEndpoint("/generate-report", inputData);
-    }
-
-    @SuppressWarnings("unchecked")
-    private Map<String, Object> callAiEndpoint(String endpoint, String inputData) {
         try {
-            String url = aiServiceUrl + endpoint;
+
+            String url = aiServiceUrl + "/describe";
 
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
 
             Map<String, String> requestBody = new HashMap<>();
-            requestBody.put("input_data", inputData);
+            requestBody.put("input", input);
 
-            HttpEntity<Map<String, String>> request = new HttpEntity<>(requestBody, headers);
+            HttpEntity<Map<String, String>> request =
+                    new HttpEntity<>(requestBody, headers);
 
-            ResponseEntity<Map<String, Object>> response = restTemplate.exchange(
-                url,
-                HttpMethod.POST,
-                request,
-                Map.class
-            );
+            ResponseEntity<Map> response =
+                    restTemplate.postForEntity(
+                            url,
+                            request,
+                            Map.class
+                    );
 
-            if (response.getStatusCode() == HttpStatus.OK && response.getBody() != null) {
-                logger.info("AI service call to {} succeeded", endpoint);
-                return response.getBody();
+            // Null-safe response
+            if (response.getBody() == null) {
+
+                log.error("Null response from AI service");
+
+                return fallbackResponse();
             }
 
-        } catch (ResourceAccessException e) {
-            logger.error("AI service unreachable at {}: {}", endpoint, e.getMessage());
-        } catch (Exception e) {
-            logger.error("AI service call to {} failed: {}", endpoint, e.getMessage());
-        }
+            return response.getBody();
 
-        return null;
+        } catch (Exception e) {
+
+            log.error("AI Service Error: {}", e.getMessage());
+
+            return fallbackResponse();
+        }
+    }
+
+    private Map<String, Object> fallbackResponse() {
+
+        Map<String, Object> fallback = new HashMap<>();
+
+        fallback.put("success", false);
+        fallback.put("is_fallback", true);
+        fallback.put(
+                "response",
+                "AI service temporarily unavailable"
+        );
+
+        return fallback;
     }
 }
