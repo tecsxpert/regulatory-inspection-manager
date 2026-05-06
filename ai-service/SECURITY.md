@@ -147,3 +147,38 @@ All responses from the AI service include the following security headers:
 
 All Critical and High findings confirmed zero.
 Report saved as zap_report_day11.html
+
+
+
+# SECURITY.md - Tool-69 Regulatory Inspection Manager
+
+## Executive Summary
+This document outlines the threat model and security measures for Tool-69. As an AI-integrated application, we prioritize data integrity and protection against LLM-specific vulnerabilities.
+
+## Identified Threats
+
+1. **Prompt Injection**
+   - **Risk**: User input designed to override system prompts to extract sensitive data or bypass logic.
+   - **Mitigation**: Input sanitization middleware and strict system message definitions.
+
+2. **Sensitive Data Leakage (PII)**
+   - **Risk**: Accidentally sending personally identifiable information to the Groq API[cite: 1].
+   - **Mitigation**: PII audit on Day 9 and client-side filtering before API calls.
+
+3. **Insecure Secrets Management**
+   - **Risk**: Hardcoding API keys (Groq, JDBC) in source code[cite: 1].
+   - **Mitigation**: Use of `.env` files (added to `.gitignore`) and `${ENV_VAR}` in Spring Boot[cite: 1].
+
+4. **Rate Limit Exhaustion (DoS)**
+   - **Risk**: Malicious users flooding the `/generate-report` endpoint to exhaust Groq credits[cite: 1].
+   - **Mitigation**: Implementation of `flask-limiter` at 30 requests per minute[cite: 1].
+
+5. **Broken Authentication**
+   - **Risk**: Unauthorized access to REST endpoints or the AI microservice[cite: 1].
+   - **Mitigation**: Spring Security with JWT and role-based access control (RBAC)[cite: 1].
+
+## Security Sign-off
+- [ ] Java Developer 1
+- [ ] Java Developer 2
+- [ ] AI Developer 1
+- [ ] AI Developer 2 (Drafted)
