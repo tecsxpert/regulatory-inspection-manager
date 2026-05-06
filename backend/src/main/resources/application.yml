@@ -30,3 +30,8 @@ spring:
 jwt:
   secret: mysupersecretkeythatisverylongandsecure123456
   expiration: 86400000
+
+
+  ai:
+  service:
+    url: http://localhost:5000
