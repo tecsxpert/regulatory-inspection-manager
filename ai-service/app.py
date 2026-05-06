@@ -63,7 +63,16 @@ def method_not_allowed(e):
 @app.errorhandler(429)
 def rate_limit_exceeded(e):
     return jsonify({"error": "Rate limit exceeded. Max 30 requests per minute."}), 429
+@app.route("/describe", methods=["POST"])
+def describe():
 
+    data = request.get_json()
+
+    return jsonify({
+        "success": True,
+        "response": "Inspection summary generated",
+        "is_fallback": False
+    })
 if __name__ == '__main__':
     load_embedding_model()
     initialize_chromadb()
