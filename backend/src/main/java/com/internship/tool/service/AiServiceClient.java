@@ -14,7 +14,8 @@ import java.util.Map;
 @Service
 public class AiServiceClient {
 
-    private static final Logger logger = LoggerFactory.getLogger(AiServiceClient.class);
+    private static final Logger logger =
+            LoggerFactory.getLogger(AiServiceClient.class);
 
     @Value("${ai.service.url:http://localhost:5000}")
     private String aiServiceUrl;
@@ -38,8 +39,13 @@ public class AiServiceClient {
     }
 
     @SuppressWarnings("unchecked")
-    private Map<String, Object> callAiEndpoint(String endpoint, String inputData) {
+    private Map<String, Object> callAiEndpoint(
+            String endpoint,
+            String inputData
+    ) {
+
         try {
+
             String url = aiServiceUrl + endpoint;
 
             HttpHeaders headers = new HttpHeaders();
@@ -48,26 +54,56 @@ public class AiServiceClient {
             Map<String, String> requestBody = new HashMap<>();
             requestBody.put("input_data", inputData);
 
-            HttpEntity<Map<String, String>> request = new HttpEntity<>(requestBody, headers);
+            HttpEntity<Map<String, String>> request =
+                    new HttpEntity<>(requestBody, headers);
 
-            ResponseEntity<Map<String, Object>> response = restTemplate.exchange(
-                url,
-                HttpMethod.POST,
-                request,
-                Map.class
-            );
+            ResponseEntity<Map<String, Object>> response =
+                    restTemplate.exchange(
+                            url,
+                            HttpMethod.POST,
+                            request,
+                            Map.class
+                    );
 
-            if (response.getStatusCode() == HttpStatus.OK && response.getBody() != null) {
-                logger.info("AI service call to {} succeeded", endpoint);
+            if (response.getStatusCode() == HttpStatus.OK
+                    && response.getBody() != null) {
+
+                logger.info(
+                        "AI service call to {} succeeded",
+                        endpoint
+                );
+
                 return response.getBody();
             }
 
+            logger.warn(
+                    "AI service returned empty response for {}",
+                    endpoint
+            );
+
         } catch (ResourceAccessException e) {
-            logger.error("AI service unreachable at {}: {}", endpoint, e.getMessage());
+
+            logger.error(
+                    "AI service unreachable at {}: {}",
+                    endpoint,
+                    e.getMessage()
+            );
+
         } catch (Exception e) {
-            logger.error("AI service call to {} failed: {}", endpoint, e.getMessage());
+
+            logger.error(
+                    "AI service call to {} failed: {}",
+                    endpoint,
+                    e.getMessage()
+            );
         }
 
-        return null;
+        return Map.of(
+                "status", "error",
+                "message", "AI service unavailable"
+        );
     }
 }
+
+#updatted
+    
