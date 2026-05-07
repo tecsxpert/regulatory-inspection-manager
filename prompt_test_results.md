@@ -45,7 +45,10 @@ def get_average_response_time() -> float:
     if not response_times:
         return 0.0
     return round(sum(response_times) / len(response_times), 3)
+def load_prompt(file_path):
 
+    with open(file_path, "r", encoding="utf-8") as file:
+        return file.read()
 def call_groq(prompt: str, temperature: float = 0.3, max_tokens: int = 1000) -> str:
     """
     Calls the Groq AI with a prompt.
