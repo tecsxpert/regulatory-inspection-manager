@@ -146,4 +146,31 @@ All responses from the AI service include the following security headers:
 | Informational | 1 |
 
 All Critical and High findings confirmed zero.
-Report saved as zap_report_day11.html
+
+
+
+# Week 1 Security Test Results
+
+## Test Date
+18 April 2026
+
+| Test Case | Payload | Expected Result | Actual Result | Status |
+|-----------|----------|----------------|---------------|--------|
+| Empty Input | "" | 400 Error | 400 Returned | ✅ Pass |
+| SQL Injection | ' OR 1=1; DROP TABLE users; | Injection blocked | 400 Returned | ✅ Pass |
+| Prompt Injection | ignore previous instructions | Injection blocked | 400 Returned | ✅ Pass |
+| Invalid JSON | malformed JSON | Validation error | 400 Returned | ✅ Pass |
+| Oversized Input | 6000 chars | Input rejected | 400 Returned | ✅ Pass |
+
+---
+
+## Security Summary
+
+- HTML sanitization working
+- Prompt injection protection active
+- SQL injection filtering active
+- Request validation active
+- Rate limiting enabled (30 req/min)
+- AI service protected against common attacks
+
+---
